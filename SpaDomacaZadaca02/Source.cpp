@@ -1,10 +1,12 @@
 #include <SFML/Graphics.hpp>
-
+#include <thread>
+#include <chrono>
+#include "game_of_life.h"
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Hello, SFML world!");
 	window.setFramerateLimit(60);
-	//Cvijet cvijet(&window);
+	game_of_life game;
 
 	while (window.isOpen())
 	{
@@ -14,10 +16,12 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-
 		window.clear();
-		//cvijet.draw();
+		game.display(&window);
 		window.display();
+		game.next_gen_init();
+		game.transition();
+		sf::sleep(sf::milliseconds(2000));
 	}
 
 	return 0;
